@@ -8,11 +8,11 @@
 		<version>3.4.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.opb-composer</groupId>
-	<artifactId>opb-server</artifactId>
+	<groupId>com.onepercentbetter</groupId>
+	<artifactId>api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>opb-server</name>
-	<description>Backend for server of One Percent Better product</description>
+	<description>Backend for sever of One Percent Better product</description>
 	<url/>
 	<licenses>
 		<license/>
