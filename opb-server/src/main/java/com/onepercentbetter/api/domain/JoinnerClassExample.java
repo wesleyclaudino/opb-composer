@@ -20,6 +20,8 @@ public class JoinnerClassExample {
     @GeneratedValue
     private UUID id;
 
+    /*
+
     // Exemplo de relação 1p1
     @OneToOne
     @JoinColumn(name = "task")
@@ -47,4 +49,6 @@ public class JoinnerClassExample {
     // Mapeamento bidirecional de relação XpX
     @ManyToMany(mappedBy = "taskManyToManyExample1")
     private List<Task> taskManyToManyExample2;
+
+    */
 }
