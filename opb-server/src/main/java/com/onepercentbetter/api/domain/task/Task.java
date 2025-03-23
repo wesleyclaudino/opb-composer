@@ -1,5 +1,6 @@
-package com.onepercentbetter.api.domain;
+package com.onepercentbetter.api.domain.task;
 
+import com.onepercentbetter.api.domain.category.Category;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

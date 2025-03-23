@@ -1,6 +1,6 @@
 package com.onepercentbetter.api.repositories;
 
-import com.onepercentbetter.api.domain.Task;
+import com.onepercentbetter.api.domain.task.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
