@@ -46,4 +46,8 @@ public class CategoryService {
 
         return null;
     }
+
+    public void deleteCategory(UUID id) {
+        categoryRepository.deleteById(id);
+    }
 }
