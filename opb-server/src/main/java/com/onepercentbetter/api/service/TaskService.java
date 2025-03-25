@@ -36,4 +36,24 @@ public class TaskService {
     public List<Task> getTaskList() {
         return taskRepository.findAll();
     }
+
+    public Task updateTask(UUID id, TaskRequestDTO data) {
+        Optional<Task> olderTask = taskRepository.findById(id);
+
+        if (olderTask.isPresent()) {
+            Task newTask = olderTask.get();
+            newTask.setName(data.name());
+            newTask.setDescription(data.description());
+//          task.setCategoryList(data.categoryList());
+            newTask.setState(data.state());
+            newTask.setCreationDate(data.creationDate());
+            newTask.setLastUpdateDate(data.lastUpdateDate());
+            newTask.setReminderDate(data.reminderDate());
+
+            taskRepository.save(newTask);
+            return newTask;
+        }
+
+        return null;
+    }
 }

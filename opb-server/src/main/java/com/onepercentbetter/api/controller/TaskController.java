@@ -18,7 +18,7 @@ public class TaskController {
     private TaskService taskService;
 
     @PostMapping
-    public ResponseEntity<Task> create(@RequestBody TaskRequestDTO body) {
+    public ResponseEntity<Task> createTask(@RequestBody TaskRequestDTO body) {
         return ResponseEntity.ok(taskService.createTask(body));
     }
 
@@ -30,5 +30,10 @@ public class TaskController {
     @GetMapping
     public ResponseEntity<List<Task>> getTaskList() {
         return ResponseEntity.ok(taskService.getTaskList());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Task> updateTask(@PathVariable UUID id, @RequestBody TaskRequestDTO body) {
+        return ResponseEntity.ok(taskService.updateTask(id, body));
     }
 }
