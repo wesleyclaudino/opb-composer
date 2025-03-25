@@ -6,6 +6,10 @@ import com.onepercentbetter.api.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 public class CategoryService {
     @Autowired
@@ -18,5 +22,13 @@ public class CategoryService {
 
         categoryRepository.save(category);
         return category;
+    }
+
+    public Optional<Category> getCategory(UUID id) {
+        return categoryRepository.findById(id);
+    }
+
+    public List<Category> getCategoryList() {
+        return categoryRepository.findAll();
     }
 }
