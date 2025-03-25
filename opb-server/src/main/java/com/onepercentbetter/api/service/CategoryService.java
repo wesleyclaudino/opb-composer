@@ -31,4 +31,19 @@ public class CategoryService {
     public List<Category> getCategoryList() {
         return categoryRepository.findAll();
     }
+
+    public Category updateCategory(UUID id, CategoryRequestDTO data) {
+        Optional<Category> olderCategory = categoryRepository.findById(id);
+
+        if (olderCategory.isPresent()) {
+            Category newCategory = olderCategory.get();
+            newCategory.setName(data.name());
+            newCategory.setDescription(data.description());
+
+            categoryRepository.save(newCategory);
+            return newCategory;
+        }
+
+        return null;
+    }
 }

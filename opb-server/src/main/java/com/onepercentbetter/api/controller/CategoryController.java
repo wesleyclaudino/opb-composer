@@ -32,4 +32,9 @@ public class CategoryController {
     public ResponseEntity<List<Category>> getCategoryList() {
         return ResponseEntity.ok(categoryService.getCategoryList());
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Category> updateCategory(@PathVariable UUID id, @RequestBody CategoryRequestDTO body) {
+        return ResponseEntity.ok(categoryService.updateCategory(id, body));
+    }
 }
