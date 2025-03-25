@@ -4,6 +4,7 @@ import com.onepercentbetter.api.domain.task.Task;
 import com.onepercentbetter.api.domain.task.TaskRequestDTO;
 import com.onepercentbetter.api.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ public class TaskController {
 
     @PostMapping
     public ResponseEntity<Task> createTask(@RequestBody TaskRequestDTO body) {
-        return ResponseEntity.ok(taskService.createTask(body));
+        return new ResponseEntity<>(taskService.createTask(body), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -35,5 +36,11 @@ public class TaskController {
     @PutMapping("/{id}")
     public ResponseEntity<Task> updateTask(@PathVariable UUID id, @RequestBody TaskRequestDTO body) {
         return ResponseEntity.ok(taskService.updateTask(id, body));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Task> deleteTask(@PathVariable UUID id) {
+        taskService.deleteTask(id);
+        return ResponseEntity.noContent().build();
     }
 }
