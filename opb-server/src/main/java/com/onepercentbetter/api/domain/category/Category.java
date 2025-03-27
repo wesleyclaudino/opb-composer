@@ -1,14 +1,14 @@
 package com.onepercentbetter.api.domain.category;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.onepercentbetter.api.domain.task.Task;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Table(name = "category")
@@ -25,6 +25,7 @@ public class Category {
     private String name;
     private String description;
 
-//    @ManyToMany(mappedBy = "categoryList")
-//    private List<Task> taskList;
+    @JsonIgnoreProperties("category")
+    @OneToMany(mappedBy = "category")
+    private List<Task> tasks;
 }

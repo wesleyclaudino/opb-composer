@@ -19,11 +19,11 @@ public class TaskService {
         Task task = new Task();
         task.setName(data.name());
         task.setDescription(data.description());
-//        task.setCategoryList(data.categoryList());
         task.setState(data.state());
         task.setCreationDate(data.creationDate());
         task.setLastUpdateDate(data.lastUpdateDate());
         task.setReminderDate(data.reminderDate());
+        task.setCategory(data.category());
 
         taskRepository.save(task);
         return task;
@@ -44,11 +44,11 @@ public class TaskService {
             Task newTask = olderTask.get();
             newTask.setName(data.name());
             newTask.setDescription(data.description());
-//          task.setCategoryList(data.categoryList());
             newTask.setState(data.state());
             newTask.setCreationDate(data.creationDate());
             newTask.setLastUpdateDate(data.lastUpdateDate());
             newTask.setReminderDate(data.reminderDate());
+            newTask.setCategory(data.category());
 
             taskRepository.save(newTask);
             return newTask;

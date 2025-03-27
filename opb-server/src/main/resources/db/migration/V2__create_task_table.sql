@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS task
     creation_date    TIMESTAMP WITHOUT TIME ZONE,
     last_update_date TIMESTAMP WITHOUT TIME ZONE,
     reminder_date    TIMESTAMP WITHOUT TIME ZONE,
+    category_id      UUID REFERENCES category (id),
 
     CONSTRAINT pk_task PRIMARY KEY (id)
 );
