@@ -111,4 +111,10 @@
         </plugins>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>opb-composer</id>
+            <url>https://github.com/wesleyclaudino/opb-composer.git</url>
+        </repository>
+    </distributionManagement>
 </project>
