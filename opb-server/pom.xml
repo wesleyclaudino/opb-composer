@@ -6,7 +6,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.4.4</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <groupId>com.onepercentbetter</groupId>
     <artifactId>api</artifactId>
@@ -74,12 +74,6 @@
             <artifactId>h2</artifactId>
             <scope>test</scope>
         </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId>com.amazonaws</groupId>-->
-<!--            <artifactId>aws-java-sdk-s3</artifactId>-->
-<!--            <version>1.12.782</version>-->
-<!--        </dependency>-->
     </dependencies>
 
     <build>
