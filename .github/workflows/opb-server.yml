@@ -31,3 +31,13 @@ jobs:
 
       - name: Push image docker
         run: docker push ${{secrets.DOCKER_USER}}/opb-server
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Pull image from Docker HUB
+        run: docker pull ${{secrets.DOCKER_USER}}/opb-server:latest
+
+      - name: Run docker container
+        run: docker run -d -p 8080:8080 --name deploy-opb-server ${{secrets.DOCKER_USER}}/opb-server:latest
