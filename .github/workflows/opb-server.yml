@@ -23,7 +23,7 @@ jobs:
         working-directory: opb-server
 
       - name: Docker HUB Login
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
+        run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
 
       - name: Build docker image
         run: docker build -t ${{secrets.DOCKER_USER}}/opb-server .
