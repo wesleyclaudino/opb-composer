@@ -26,6 +26,7 @@ jobs:
 
       - name: Build docker image
         run: docker build -t ${{secrets.DOCKER_USER}}/opb-server .
+        working-directory: opb-server
 
       - name: Push image docker
-        run: docker push${{secrets.DOCKER_USER}}/opb-server
+        run: docker push ${{secrets.DOCKER_USER}}/opb-server
