@@ -20,6 +20,7 @@ jobs:
 
       - name: Build project
         run: mvn clean install
+        working-directory: opb-server
 
       - name: Docker HUB Login
         run: docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}
