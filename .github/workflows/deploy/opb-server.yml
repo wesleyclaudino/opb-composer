@@ -1,0 +1,31 @@
+name: OPB Server Deploy
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'corretto'
+          java-version: 21
+
+      - name: Build project
+        run: mvn clean install
+
+      - name: Docker HUB Login
+        run: docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}
+
+      - name: Build docker image
+        run: docker build -t ${{secrets.DOCKER_USER}}/opb-server .
+
+      - name: Push image docker
+        run: docker push${{secrets.DOCKER_USER}}/opb-server
