@@ -25,11 +25,13 @@ jobs:
 
       - name: Waiting database is up to date
         run: |
-          until docker exec postgres pg_isready -U postgres; do sleep 1; done
+          until docker exec ${{secrets.POSTGRES_DB}} pg_isready -U ${{secrets.POSTGRES_USER}}; do sleep 1; done
 
       - name: Run tests
         run: |
-          docker exec postgres psql -U postgres -d meu_banco -c '\l'
+          docker exec ${{secrets.POSTGRES_DB}} psql -U ${{secrets.POSTGRES_USER}} -d ${{secrets.POSTGRES_DB}} -c '\l'
+        env:
+          PGPASSWORD: ${{secrets.POSTGRES_PASSWORD}}
 
       - name: Setup Java
         uses: actions/setup-java@v4
