@@ -60,5 +60,8 @@ jobs:
       - name: Pull image from Docker HUB
         run: docker pull ${{secrets.DOCKER_USER}}/opb-server:latest
 
+      - name: Remove old container (if exists)
+        run: docker rm -f deploy-opb-server || true
+
       - name: Run docker container
         run: docker run -d -p 8080:8080 --name deploy-opb-server ${{secrets.DOCKER_USER}}/opb-server:latest
