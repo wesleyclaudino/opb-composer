@@ -8,9 +8,28 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Upload PostgreSQL container
+        run: |
+          docker run -d \
+          --name ${{secrets.POSTGRES_DB}} \
+          -e POSTGRES_USER=${{secrets.POSTGRES_USER}} \
+          -e POSTGRES_PASSWORD=${{secrets.POSTGRES_PASSWORD}} \
+          -e POSTGRES_DB=${{secrets.POSTGRES_DB}} \
+          -p 5432:5432 \
+          postgres:17.4
+
+      - name: Waiting database is up to date
+        run: |
+          until docker exec postgres pg_isready -U postgres; do sleep 1; done
+
+      - name: Run tests
+        run: |
+          docker exec postgres psql -U postgres -d meu_banco -c '\l'
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -37,7 +56,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Pull image from Docker HUB
-        run: docker pull ${{secrets.DOCKER_USER}}/opb-server:latest
+        run: docker pull ghcr.io/${{secrets.DOCKER_USER}}/opb-server:latest
 
       - name: Run docker container
-        run: docker run -d -p 8080:8080 --name deploy-opb-server ${{secrets.DOCKER_USER}}/opb-server:latest
+        run: docker run -d -p 8080:8080 --name deploy-opb-server ghcr.io/${{secrets.DOCKER_USER}}/opb-server:latest
