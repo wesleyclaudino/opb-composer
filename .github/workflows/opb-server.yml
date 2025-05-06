@@ -13,10 +13,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Remove old postgres container (if exists)
+        run: docker rm -f deploy-postgres || true
+
       - name: Upload PostgreSQL container
         run: |
           docker run -d \
-          --name ${{secrets.POSTGRES_DB}} \
+          --name deploy-postgres \
           -e POSTGRES_USER=${{secrets.POSTGRES_USER}} \
           -e POSTGRES_PASSWORD=${{secrets.POSTGRES_PASSWORD}} \
           -e POSTGRES_DB=${{secrets.POSTGRES_DB}} \
@@ -25,11 +28,11 @@ jobs:
 
       - name: Waiting database is up to date
         run: |
-          until docker exec ${{secrets.POSTGRES_DB}} pg_isready -U ${{secrets.POSTGRES_USER}}; do sleep 1; done
+          until docker exec deploy-postgres pg_isready -U ${{secrets.POSTGRES_USER}}; do sleep 1; done
 
       - name: Run tests
         run: |
-          docker exec ${{secrets.POSTGRES_DB}} psql -U ${{secrets.POSTGRES_USER}} -d ${{secrets.POSTGRES_DB}} -c '\l'
+          docker exec deploy-postgres psql -U ${{secrets.POSTGRES_USER}} -d ${{secrets.POSTGRES_DB}} -c '\l'
         env:
           PGPASSWORD: ${{secrets.POSTGRES_PASSWORD}}
 
@@ -60,7 +63,7 @@ jobs:
       - name: Pull image from Docker HUB
         run: docker pull ${{secrets.DOCKER_USER}}/opb-server:latest
 
-      - name: Remove old container (if exists)
+      - name: Remove old opb-server container (if exists)
         run: docker rm -f deploy-opb-server || true
 
       - name: Run docker container
