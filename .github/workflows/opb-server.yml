@@ -13,29 +13,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Remove old postgres container (if exists)
-        run: docker rm -f deploy-postgres || true
-
-      - name: Upload PostgreSQL container
-        run: |
-          docker run -d \
-          --name deploy-postgres \
-          -e POSTGRES_USER=${{secrets.POSTGRES_USER}} \
-          -e POSTGRES_PASSWORD=${{secrets.POSTGRES_PASSWORD}} \
-          -e POSTGRES_DB=${{secrets.POSTGRES_DB}} \
-          -p 5432:5432 \
-          postgres:17.4
-
-      - name: Waiting database is up to date
-        run: |
-          until docker exec deploy-postgres pg_isready -U ${{secrets.POSTGRES_USER}}; do sleep 1; done
-
-      - name: Run tests
-        run: |
-          docker exec deploy-postgres psql -U ${{secrets.POSTGRES_USER}} -d ${{secrets.POSTGRES_DB}} -c '\l'
-        env:
-          PGPASSWORD: ${{secrets.POSTGRES_PASSWORD}}
-
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
@@ -60,6 +37,29 @@ jobs:
     needs: build
     runs-on: self-hosted
     steps:
+      - name: Remove old postgres container (if exists)
+        run: docker rm -f deploy-postgres || true
+
+      - name: Upload PostgreSQL container
+        run: |
+          docker run -d \
+          --name deploy-postgres \
+          -e POSTGRES_USER=${{secrets.POSTGRES_USER}} \
+          -e POSTGRES_PASSWORD=${{secrets.POSTGRES_PASSWORD}} \
+          -e POSTGRES_DB=${{secrets.POSTGRES_DB}} \
+          -p 5432:5432 \
+          postgres:17.4
+
+      - name: Waiting database is up to date
+        run: |
+          until docker exec deploy-postgres pg_isready -U ${{secrets.POSTGRES_USER}}; do sleep 1; done
+
+      - name: Run tests
+        run: |
+          docker exec deploy-postgres psql -U ${{secrets.POSTGRES_USER}} -d ${{secrets.POSTGRES_DB}} -c '\l'
+        env:
+          PGPASSWORD: ${{secrets.POSTGRES_PASSWORD}}
+
       - name: Pull image from Docker HUB
         run: docker pull ${{secrets.DOCKER_USER}}/opb-server:latest
 
